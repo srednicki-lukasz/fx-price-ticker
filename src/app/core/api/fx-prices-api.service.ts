@@ -27,6 +27,6 @@ export class FxPricesApiService {
 	 */
 	getLatestPrice(instrument: string): Observable<Price> {
 		const options = { params: { instrument } };
-		return this.http.get<Price>(environment.api + '/api/prices', options)
+		return this.http.get<Price>(environment.api + '/api/latest', options)
 	}
 }

@@ -63,7 +63,6 @@ export class FxPricesService {
 				// json-server get request with query returns an array
 				// for that reason data is mapped so it matches Price interface instead of Price[]
 				map(price => (price as Price[])[0]),
-				filter(price => Object.keys(price).length > 0)
 			)
 			.subscribe(res => {
 				this._prices$.next([res, ...this._prices$.value]);
