@@ -1,6 +1,6 @@
 export interface Price {
 	id?: number,
-	instrumentName?: string,
+	instrument?: string,
 	bid?: string,
 	ask?: string,
 	timestamp?: Date
