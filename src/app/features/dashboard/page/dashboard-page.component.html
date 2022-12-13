@@ -1,1 +1,4 @@
-<p>dashboard-page works!</p>
+<fx-prices-table
+	[prices]="(prices$ | async)!"
+	[pricesLoading]="(pricesLoading$ | async)!"
+></fx-prices-table>

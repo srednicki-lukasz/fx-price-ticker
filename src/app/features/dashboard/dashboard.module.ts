@@ -6,6 +6,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 
 import { components } from './components';
 
+import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
 	declarations: [
 		DashboardPageComponent,
@@ -13,7 +15,8 @@ import { components } from './components';
 	],
 	imports: [
 		CommonModule,
-		DashboardRoutingModule
+		DashboardRoutingModule,
+		MatTableModule
 	],
 })
 export class DashboardModule { }
