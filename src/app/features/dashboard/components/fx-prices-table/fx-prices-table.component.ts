@@ -28,7 +28,7 @@ export class FxPricesTableComponent {
 	 * @type {string[]}
 	 * @memberof FxPricesTableComponent
 	 */
-	columns: string[] = ['id', 'instrument', 'bid', 'ask', 'timestamp'];
+	columns: string[] = ['index', 'instrument', 'bid', 'ask', 'timestamp'];
 
 	constructor() { }
 }
