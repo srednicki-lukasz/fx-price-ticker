@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { combineLatest, delay, filter, Observable, take } from 'rxjs';
 
 import { FxPricesService } from 'src/app/core/services';
 
+import { Instruments } from 'src/app/core/enums';
 import { Price } from 'src/app/core/interfaces';
 
 @Component({
@@ -10,7 +11,7 @@ import { Price } from 'src/app/core/interfaces';
 	templateUrl: './dashboard-page.component.html',
 	styleUrls: ['./dashboard-page.component.css']
 })
-export class DashboardPageComponent implements OnInit {
+export class DashboardPageComponent implements OnInit, OnDestroy {
 
 	/**
 	 * Prices.
@@ -33,5 +34,21 @@ export class DashboardPageComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.fxPricesService.getAllPrices();
+
+		combineLatest([this.fxPricesService.prices$, this.fxPricesService.pricesLoading$])
+			.pipe(
+				filter(([prices, loading]): boolean => prices.length > 0 && !loading),
+				take(1),
+				delay(5000)
+			)
+			.subscribe(() => {
+				this.fxPricesService.startTickingLatestPrices(Instruments.EUR_JPY, 5000);
+				this.fxPricesService.startTickingLatestPrices(Instruments.EUR_USD, 5000);
+				this.fxPricesService.startTickingLatestPrices(Instruments.GBP_USD, 5000);
+			})
+	}
+
+	ngOnDestroy(): void {
+		this.fxPricesService.stopTickingLatestPrices();
 	}
 }

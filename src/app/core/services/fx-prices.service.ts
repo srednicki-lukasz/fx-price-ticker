@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable } from 'rxjs';
 
 import { FxPricesApiService } from '../api/fx-prices-api.service';
 
@@ -31,6 +31,13 @@ export class FxPricesService {
 		return this._pricesLoading$.asObservable();
 	}
 
+	/**
+	 * Timeout selector.
+	 * @type {ReturnType<typeof setTimeout>}
+	 * @memberof FxPricesService
+	 */
+	private timeout!: ReturnType<typeof setTimeout>;
+
 	constructor(private api: FxPricesApiService) { }
 
 	/**
@@ -44,5 +51,31 @@ export class FxPricesService {
 				this._prices$.next(res);
 				this._pricesLoading$.next(false);
 			});
+	}
+
+	/**
+	 * Start ticking latest prices.
+	 * @memberof FxPricesService
+	 */
+	startTickingLatestPrices(instrument: string, interval: number): void {
+		this.api.getLatestPrice(instrument)
+			.pipe(
+				// json-server get request with query returns an array
+				// for that reason data is mapped so it matches Price interface instead of Price[]
+				map(price => (price as Price[])[0]),
+				filter(price => Object.keys(price).length > 0)
+			)
+			.subscribe(res => {
+				this._prices$.next([res, ...this._prices$.value]);
+				this.timeout = setTimeout(() => this.startTickingLatestPrices(instrument, interval), interval);
+			})
+	}
+
+	/**
+	 * Stop ticking latest prices.
+	 * @memberof FxPricesService
+	 */
+	stopTickingLatestPrices(): void {
+		clearTimeout(this.timeout);
 	}
 }
