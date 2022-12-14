@@ -25,6 +25,7 @@ For better development experience I've decided to use JSON Server. It allowed me
 - Setup routing.
 - Implement table component with basic styling (Angular Material UI Components) and its responsive version.
 - Implement ticking stream of prices (wait for api call to complete before executing another request for the same instrument).
+- Connect component with data.
 
 
 ## Some To-Dos
