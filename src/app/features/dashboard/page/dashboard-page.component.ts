@@ -36,11 +36,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 		this.fxPricesService.getAllPrices();
 
 		combineLatest([this.fxPricesService.prices$, this.fxPricesService.pricesLoading$])
-			.pipe(
-				filter(([prices, loading]): boolean => prices.length > 0 && !loading),
-				take(1),
-				delay(5000)
-			)
+			.pipe(filter(([prices, loading]): boolean => prices.length > 0 && !loading), take(1), delay(5000))
 			.subscribe(() => {
 				this.fxPricesService.startTickingLatestPrices(Instruments.EUR_JPY, 5000);
 				this.fxPricesService.startTickingLatestPrices(Instruments.EUR_USD, 5000);
