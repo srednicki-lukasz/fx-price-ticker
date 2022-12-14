@@ -18,7 +18,7 @@ For better development experience I've decided to use JSON Server. It allowed me
 
 ## Completed
 - Basic configuration of new Angular project.
-- Create service and methods methods that will connect to specified endpoints.
+- Create service and methods that will connect to specified endpoints.
 - Create service and methods that component will call to get the data.
 - Setup JSON Server so the service can actually fetch the data.
 - Add `dashoard` module.
