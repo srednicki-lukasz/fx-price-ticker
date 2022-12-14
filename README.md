@@ -5,7 +5,7 @@ After downloading the files:
 3. Run `npm start`.
 4. Go to [http://localhost:4200](http://localhost:4200).
 
-Because i used JSON Server to mimic actual data fetching, in `fx-prices-service.ts:65` there is data mapping so the response matches `Price` interface instead of `Price[]`. This is due to that JSON Server returns an array for `GET` request with query parameters.
+Because I used JSON Server to mimic actual data fetching, in `fx-prices-service.ts:65` there is data mapping so the response matches `Price` interface instead of `Price[]`. This is due to that JSON Server returns an array for `GET` request with query parameters.
 
 
 ## Angular
